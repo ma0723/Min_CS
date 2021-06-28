@@ -10,13 +10,38 @@
 
 
 
+- [개념](#개념)
 - [DDL](#DDL)
-
 - [DCL](#DCL)
-
 - [DML](#DML)
+- [JOIN](#JOIN)
 
-  
+
+
+----
+
+## 개념
+
+
+
+- DDL 
+
+  - DB 구조, 데이터 형식, 접근 방식 등 **DB 구축하거나 수정** 목적
+
+  - **데이터 사전**이라는 특별한 파일에 여러 개의 테이블로서 저장
+
+- DCL
+
+  - 데이터 **보안, 무결성, 회복, 병행 제어** 등을 정의하는데 사용
+  - 데이터베이스 **관리자**가 데이터 관리하는 목적
+
+- DML
+
+  - 데이터베이스 **사용자**가 응용 프로그램이나 질의어를 통해 저장된 데이터를 실질적으로 관리하는데 사용되는 언어
+
+- JOIN
+
+
 
 
 ----
@@ -25,25 +50,31 @@
 
 > 데이터 정의어 (Data Define Language)
 
+
+
 ### 1. CREATE
 
 #### (1) CREATE TABLE
 
-- `CREATE TABLE 테이블명` : 테이블 생성
+> `CREATE TABLE 테이블명` 
 
-- `PRIMARY KEY(속성명)` : 기본키
+- KEY
 
-- `UNIQUE` : 대체키로 사용할 속성 또는 속성의 집합을 지정하는 것으로 중복된 값 가질 수 없다
+  - `PRIMARY KEY(속성명)` : 기본키
 
-- `FOREIGN KEY(속성명) REFERENCES 테이블명(속성명)`
+  - `UNIQUE` : 대체키로 사용할 속성 또는 속성의 집합을 지정하는 것으로 중복된 값 가질 수 없다
 
-  - `ON DELETE` 옵션 : NO ACTION, CASCADE, SET NULL, SET DEFAULT
+  - `FOREIGN KEY(속성명) REFERENCES 테이블명(속성명)`
 
-  - `ON UPDATE` 옵션 : NO ACTION, CASCADE, SET NULL, SET DEFAULT
+    - `ON DELETE` 옵션 : NO ACTION, CASCADE, SET NULL, SET DEFAULT
 
-- `CONSTRAINT` : 제약 조건의 이름 지정하며 이름 지정할 필요없으면 CHECK절만 사용
+    - `ON UPDATE` 옵션 : NO ACTION, CASCADE, SET NULL, SET DEFAULT
 
-- `CHECK` : 속성값 제약 조건 정의
+- 제약조건
+
+  - `CONSTRAINT` : 제약 조건의 이름 지정하며 이름 지정할 필요없으면 CHECK절만 사용
+
+  - `CHECK` : 속성값 제약 조건 정의
 
 - [input]
 
@@ -72,8 +103,7 @@ CREATE TABLE Instructor
 
 #### (2) CREATE VIEW 
 
-- `CREATE VIEW 뷰명`
-- `AS SELECT`
+> `CREATE VIEW 뷰명`  `AS SELECT` 
 
 - [input]
 
@@ -96,71 +126,100 @@ WHERE 학생=2;
 
 #### (1) ALTER TABLE
 
+> `ALTER TABLE 테이블명`
+
+- 속성
+  - `ADD 속성명 자료형` 추가
+  - `ALTER | MODIFY 속성명 `  정의 변경
+  - `DROP COLUMN 속성명 CASCADE` 삭제
+
 - [input]
 
 ```sql
 -- ALTER TABLE 테이블명 ADD 속성명 자료형
--- ALTER TABLE 테이블명 ALTER | MODIFY 속성명 
 -- ALTER TABLE 테이블명 DROP COLUMN 속성명 CASCADE
+-- ALTER TABLE 테이블명 ALTER | MODIFY 속성명
+ALTER TABLE HRD ALTER 주민번호 NUMBER(6);
+ALTER TABLE HRD MODIFY 주민번호 NUMBER(6);
+-- HRD 테이블에서 주민번호의 속성의 크기를 6으로 변경
 ```
 
 #### (2) DROP TABLE
+
+> `DROP TABLE 테이블명`
+
+- `CASCADE`  : 제거할 요소 참조하는 **모든** 개체 **함께 제거(참조 무결성** 제약 조건)
+- `RESTRICTED`  : 다른 개체가 제거할 요소를 참조중인 경우 **제거 취소**
 
 - [input]
 
 ```sql
 -- DROP TABLE 테이블명 CASCADE
+-- DROP TABLE 테이블명 RESTRICTED 
+DROP TABLE 사원 CASCADE
+-- 사원 테이블을 제거하고 참조하는 모든 데이터도 함께 제거
 ```
 
-#### 
+
 
 ---
 
 ## DCL
 
-> 데이터 조작어 (Data Control Language)
+> 데이터 제어어 (Data Control Language)
+
+
 
 ### 1. GRANT / REVOKE
 
-#### (1) 
+#### (1) 사용자 등급 지정 및 해제
+
+> `GRANT 사용자등급 TO 사용자_ID_리스트 ` , `REVOKE 사용자등급 FROM 사용자_ID_리스트 `
 
 - [input]
 
 ```sql
--- GRANT 
--- REVOKE
+-- GRANT 사용자등급 TO 사용자_ID_리스트 
+-- REVOKE 사용자등급 FROM 사용자_ID_리스트 
 ```
 
-#### (2) 
+#### (2) 테이블 및 속성에 대한 권한 부여 및 취소
+
+- 권한 : `ALL`, `SELECT`, `INSERT`, `DELETE`, `UPDATE`, `ALTER` 등
+- `GRANT` 
+  - `WITH GRANT OPTION` : 부여받은 권한을 다른 사용자에게 **다시 부여**할 수 있는 권한
+  - `ON 테이블명 TO 사용자`
+- `REVOKE`
+  - `GRANT OPTION FOR` : 다른 사용자에게 권한을 부여할 수 있는 권한을 취소
+  - `CASCADE` : 권한 취소 시 권한 부여받았던 사용자가 부여한 권한도 **연쇄적 취소**
+  - `ON 테이블명 FROM 사용자`
 
 - [input]
 
 ```sql
--- GRANT 
--- REVOKE
+-- GRANT 권한_리스트 ON 테이블명 TO 사용자 (WITH GRANT OPTION)
+GRANT ALL ON 사원 TO 김영웅;
+-- REVOKE (GRANT OPTION FOR) 권한_리스트 ON 테이블명 FROM 사용자 (CASCADE)
+REVOKE SELECT, INSERT, DELETE ON 고객 FROM 이민지;
 ```
 
-#### 
+
 
 ### 2. COMMIT / ROLLBACK / SAVEPOINT 
 
 #### (1) COMMIT
 
-- [input]
-
-```sql
-
-```
+- **트랜잭션이 성공적으로 끝나면** DB가 새로운 **일관성** 상태를 가지기 위해 변경된 **모든** 내용을 DB에 반영해야 하는 데 사용하는 명령
 
 #### (2) ROLLBACK 
 
+- **아직 COMMIT 되지 않은** 변경된 모든 내용들을 **취소하고** DB를 **이전** 상태로 되돌리는 명령어
+
 #### (3) SAVEPOINT 
 
-- [input]
-
-```sql
-
-```
+- 트랜잭션 내에서 **ROLLBACK할 위치인 저장점**을 지저하는 명령어
+- 저장점을 지정할 때에는 **이름 부여**
+- ROLLBACK시 지**정된 저장점까지 트랜잭션 처리 내용이 취소**
 
 
 
@@ -168,97 +227,199 @@ WHERE 학생=2;
 
 ## DML
 
+> 데이터 조작어 (Data Manipulation Language)
+
+
+
 ### 1. SELECT
 
-#### (1) 
+#### (1) SELECT
+
+> `SELECT (PREDICATE) (*|테이블명.)속성명 (AS 헤더) FROM 테이블명 `
+
+- 속성명
+  - `*` : 모든 속성
+  - `테이블명.속성명` : 2개 이상의 테이블 대상으로 검색
+  - `AS` : 테이블 헤더 이름 지정
+-  PREDICATE : 불러올 튜플 수를 제한할 명령어
+  - ALL
+  - DISTINCT : 중복 튜플 존재 시 그중 첫번째만 검색
+  - DISTINCTROW : 중복된 튜플 검색하지만 선택된 속성값이 아닌 튜플 전체 대상
+
+#### (2) 조건 / 그룹 / 순서 / 개수
+
+> `FROM` `WHERE` `GROUP BY` `HAVING` `SELECT` `DISTINCT` `ORDER BY` `LIMIT`
+
+- 조건 (WHERE)
+- 그룹 (GROUP BY)
+  - HAVING : 그룹의 조건 
+- 순서 (ORDER BY)
+  - ASC|DESC : 생략하면 ASC 자동
+- 개수 (LIMIT)
 
 - [input]
 
 ```sql
-
+-- WHERE 조건 
+-- GROUP BY 속성명 HAVING 조건 
+-- ORDER BY 속성명 (ASC|DESC)
 ```
 
-#### (2) 중복제거 
+#### (3) 그룹 함수
 
-#### (3) 조건
+> 일반적으로 GROUP BY와 사용
 
-#### (4) 그룹 
-
-#### (5) 순서
-
-#### (4) 그룹 함수
+![image-20210629010354520](Syntax_SQL.assets/image-20210629010354520.png)
 
 - [input]
 
 ```sql
-
+SELECT COUNT(DISTINCT DEPT) FROM STUDENT WHERE DEPT='전산과';
+-- 전산과인 경우 DEPT를 중복 제거한 후 개수를 구하는 경우(1)
 ```
 
-#### 
+#### (4) 중복 조건
+
+![image-20210629010718810](Syntax_SQL.assets/image-20210629010718810.png)
+
+
 
 ### 2. INSERT
 
-#### (1) 
-
 - [input]
 
 ```sql
-
+-- INSERT INTO 테이블명(속성명1, 속성명2) VALUES (값1, 값2);
 ```
 
-#### (2) 
 
-- [input]
-
-```sql
-
-```
-
-#### 
 
 ### 3. DELETE
 
-### (1) 
-
 - [input]
 
 ```sql
-
+-- DELETE FROM 테이블명 WHERE 조건; 
+DELETE FROM 사원 WHERE 이름='홍길동'; 
 ```
 
-#### (2) 
 
-- [input]
-
-```sql
-
-```
-
-#### 
 
 ### 4. UPDATE
 
-#### (1) 
+- [input]
+
+```sql
+-- UPDATE 테이블명 SET 속성명='값' WHERE 조건;
+UPDATE 고객 SET 등급='VIP' WHERE 구매금액 >= 10000;
+```
+
+
+
+-----
+
+## JOIN
+
+
+
+### 1. JOIN 
+
+- INNER JOIN(교집합)
+- **LEFT/RIGHT JOIN(부분집합)**
+- OUTER JOIN(합집합)
+
+
+
+### 2. 문제 (Programmers) 
+
+#### (1) 없어진 기록 찾기
 
 - [input]
 
 ```sql
-
+SELECT OUTTABLE.ANIMAL_ID, OUTTABLE.NAME
+-- ID와 이름
+-- A.FIELD1, A.FILED2
+FROM ANIMAL_OUTS OUTTABLE LEFT JOIN ANIMAL_INS INTABLE 
+-- FROM A_TABLE A OO JOIN B_TABLE B
+ON OUTTABLE.ANIMAL_ID = INTABLE.ANIMAL_ID
+-- ON A.KEY = B.KEY
+-- 입양을 간 기록은 있고 (ANIMAL_OUTS)
+WHERE INTABLE.ANIMAL_ID IS NULL
+-- WHERE B.KEY IS NULL(A, B 교집합 제외 A-B)
+-- 보호소에 들어온 기록이 없는 동물(ANIMAL_INS)
+ORDER BY ANIMAL_ID
+-- ID 순으로 조회
 ```
 
-#### (2) 
+
+
+#### (2) 보호소에서 중성화한 동물 
 
 - [input]
 
 ```sql
-
+SELECT A.ANIMAL_ID, A.ANIMAL_TYPE , A.NAME
+-- 동물의 아이디와 생물 종, 이름을 조회
+FROM ANIMAL_INS A LEFT JOIN ANIMAL_OUTS B
+ON A.ANIMAL_ID = B.ANIMAL_ID
+-- ANIMAL_OUTS 테이블의 ANIMAL_ID는 ANIMAL_INS의 ANIMAL_ID의 외래 키
+WHERE A.SEX_UPON_INTAKE LIKE 'Intact%' 
+AND B.SEX_UPON_OUTCOME NOT LIKE 'Intact%'
+-- 보호소에 들어올 당시에는 중성화(SEX_UPON_INTAKE)X
+-- 보호소를 나갈 당시에는 중성화(SEX_UPON_OUTCOME)O
+ORDER BY A.ANIMAL_ID
+-- 아이디 순으로 조회
 ```
+
+
+
+#### (3) 오랜기간 보호한 동물(1)
+
+- [input]
+
+```sql
+SELECT A.NAME, A.DATETIME
+-- 이름과 보호 시작일
+FROM ANIMAL_INS A LEFT JOIN ANIMAL_OUTS B
+ON A.ANIMAL_ID = B.ANIMAL_ID
+-- ANIMAL_OUTS 테이블의 ANIMAL_ID는 ANIMAL_INS의 ANIMAL_ID의 외래 키
+WHERE B.ANIMAL_ID IS NULL
+-- 아직 입양을 못 간 동물 중(ANIMAL_OUTS에 없는 경우)
+ORDER BY A.DATETIME
+-- 보호 시작일 순으로 조회
+LIMIT 3
+-- 가장 오래 보호소에 있었던 동물 3마리
+```
+
+
+
+#### (4) 있었는데요 없었습니다
+
+- [input]
+
+```sql
+SELECT A.ANIMAL_ID, A.NAME
+-- 아이디와 이름을 조회
+FROM ANIMAL_INS A LEFT JOIN ANIMAL_OUTS B
+-- LEFT JOIN 
+ON A.ANIMAL_ID = B.ANIMAL_ID
+-- ANIMAL_OUTS 테이블의 ANIMAL_ID는 ANIMAL_INS의 ANIMAL_ID의 외래 키
+WHERE A.DATETIME > B.DATETIME
+-- 보호 시작일(A.DATETIME)보다 입양일(B.DATETIME)이 더 빠른 동물
+ORDER BY A.DATETIME
+-- 보호 시작일이 빠른 순으로 조회
+```
+
+
 
 
 
 ---
 
 ## References
+
+
 
 - 시나공 정보처리기사 실기 대비용 핵심요약
 - Programmers 문제풀이
