@@ -22,7 +22,7 @@
 
 - [Application_Test](https://github.com/ma0723/Min_CS/blob/master/Application_Test.md) : 애플리케이션 테스트관리
 
-- 응용 SW 기초 기술 활용
+- [Application_SW](https://github.com/ma0723/Min_CS/blob/master/Application_SW.md) : 응용 SW 기초 기술 활용
 
 - 요구사항 확인
 
