@@ -12,6 +12,8 @@
 
 
 
+- [Syntax_Language](https://github.com/ma0723/Min_CS/blob/master/Syntax_Language.md) : 프로그래밍 언어 활용
+
 - [Syntax_C](https://github.com/ma0723/Min_CS/blob/master/Syntax_C.md) : 프로그래밍 언어 활용
 
 - [Syntax_Java](https://github.com/ma0723/Min_CS/blob/master/Server_Program.md) : 프로그래밍 언어 활용
@@ -24,17 +26,17 @@
 
 - [Application_SW](https://github.com/ma0723/Min_CS/blob/master/Application_SW.md) : 응용 SW 기초 기술 활용
 
-- 요구사항 확인
+- [Request]() :요구사항 확인
 
-- 데이터입출력 구현
+- [Data]() : 데이터입출력 구현
 
-- 통합 구현
+- [Integration]() : 통합 구현
 
-- 화면 설계
+- [UI]() : 화면 설계
 
-- 소프트웨어 보안 관리
+- [Security]() : 소프트웨어 보안 관리
 
-- 제품 SW 패키징
+- [Packaging]() :제품 SW 패키징
 
   
 
