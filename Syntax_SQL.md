@@ -450,11 +450,21 @@ ORDER BY A.DATETIME
 
 
 
-### 2. 구성도 
+### 2. 유형
+
+- PL/SQL : 표준 SQL기반으로 Oracle에서 개발한 데이터 조작언어
+
+- JDBC  (Java DataBase Connectivity) ★ 
+
+  **Java 언어로 다양한** 종류의 DB에 접속하고 SQL문 수행할 때 **표준 API**
+
+
+
+### 3. 구성도 
 
 ![image-20210703164600937](Syntax_SQL.assets/image-20210703164600937.png)
 
-### 3. 프로시저 명령어
+### 4. 프로시저 명령어
 
 ![image-20210703164623596](Syntax_SQL.assets/image-20210703164623596.png)
 
