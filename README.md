@@ -32,7 +32,7 @@
 
 - [Integration](https://github.com/ma0723/Min_CS/blob/master/Integration.md) : 통합 구현
 
-- [UI]() : 화면 설계
+- [UI](https://github.com/ma0723/Min_CS/blob/master/UI.md) : 화면 설계
 
 - [Security](https://github.com/ma0723/Min_CS/blob/master/Security.md) : 소프트웨어 보안 관리
 
