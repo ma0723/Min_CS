@@ -15,11 +15,11 @@
 - [DCL](#DCL)
 - [DML](#DML)
 - [JOIN](#JOIN)
-- [프로시저](#프로시저)
 - [절차형 SQL](#절차형-sql)
   - 트리거
   - 사용자 정의 함수
   - 커서
+  - 프로시저
 
 
 
@@ -34,18 +34,30 @@
   - DB 구조, 데이터 형식, 접근 방식 등 **DB 구축하거나 수정** 목적
 
   - **데이터 사전**이라는 특별한 파일에 여러 개의 테이블로서 저장
+  
 - DCL
 
   - 데이터 **보안, 무결성, 회복, 병행 제어** 등을 정의하는데 사용
   - 데이터베이스 **관리자**가 데이터 관리하는 목적
+  
 - DML
 
   - 데이터베이스 **사용자**가 응용 프로그램이나 질의어를 통해 저장된 데이터를 실질적으로 관리하는데 사용되는 언어
+  
 - JOIN
-- 프로시저
-- 트리거
-- 사용자 정의 함수
-- 커서
+
+- 동적 SQL
+
+  - 조건에 따라 SQL 구문 자체 변경하고 조작 가능
+
+- 절차형 SQL
+
+  > **특정 사용자**가 **실행 순서**를 정해놓고 사용하는 SQL문
+
+  - 트리거
+  - 사용자 정의 함수
+  - 커서
+  - 프로시저
 
 
 
@@ -176,7 +188,7 @@ DROP TABLE 사원 CASCADE
 
 
 
-### 1. GRANT / REVOKE
+### 1. GRANT / REVOKE ★
 
 #### (1) 사용자 등급 지정 및 해제
 
@@ -237,7 +249,7 @@ REVOKE SELECT, INSERT, DELETE ON 고객 FROM 이민지;
 
 
 
-### 1. SELECT
+### 1. SELECT ★
 
 #### (1) SELECT
 
@@ -252,7 +264,7 @@ REVOKE SELECT, INSERT, DELETE ON 고객 FROM 이민지;
   - DISTINCT : 중복 튜플 존재 시 그중 첫번째만 검색
   - DISTINCTROW : 중복된 튜플 검색하지만 선택된 속성값이 아닌 튜플 전체 대상
 
-#### (2) 조건 / 그룹 / 순서 / 개수
+#### (2) 조건 / 그룹 / 순서 / 개수 ★
 
 > `FROM` `WHERE` `GROUP BY` `HAVING` `SELECT` `DISTINCT` `ORDER BY` `LIMIT`
 
@@ -271,9 +283,9 @@ REVOKE SELECT, INSERT, DELETE ON 고객 FROM 이민지;
 -- ORDER BY 속성명 (ASC|DESC)
 ```
 
-#### (3) 그룹 함수
+#### (3) 집계 함수
 
-> 일반적으로 GROUP BY와 사용
+> 일반적으로 **GROUP BY와 사용**
 
 ![image-20210629010354520](Syntax_SQL.assets/image-20210629010354520.png)
 
@@ -284,13 +296,23 @@ SELECT COUNT(DISTINCT DEPT) FROM STUDENT WHERE DEPT='전산과';
 -- 전산과인 경우 DEPT를 중복 제거한 후 개수를 구하는 경우(1)
 ```
 
-#### (4) 중복 조건
+- **집계 함수** : 여러 행과 테이블 전체로부터 하나의 결과값 반환 
+- 그룹 함수 : 소그룹 간의 중간 합계, 소계 산출 함수
+  - ROLLUP : 소계, 중간 집계값 산출
+  - CUBE : 다차원 집계 생성
+  - GROUPING SET : 컬럼에 대한 개별 집계
+- 윈도 함수 : DB 사용한 온라인 분석 처리 용도 사용하기 위해 SQL에 추가한 함수
+  - 순위 함수
+  - 행 순서 함수
+  - 그룹 내 비율 함수
+
+#### (4) 중복 조건 ★
 
 ![image-20210629010718810](Syntax_SQL.assets/image-20210629010718810.png)
 
 
 
-### 2. INSERT
+### 2. INSERT ★
 
 - [input]
 
@@ -300,7 +322,7 @@ SELECT COUNT(DISTINCT DEPT) FROM STUDENT WHERE DEPT='전산과';
 
 
 
-### 3. DELETE
+### 3. DELETE ★
 
 - [input]
 
@@ -311,7 +333,7 @@ DELETE FROM 사원 WHERE 이름='홍길동';
 
 
 
-### 4. UPDATE
+### 4. UPDATE ★
 
 - [input]
 
@@ -435,48 +457,15 @@ ORDER BY A.DATETIME
 
 
 
-----
-
-## 프로시저
-
-
-
-### 1. 정의
-
-- 절차형 SQL을 활용하여 특정 기능을 수행하는 일종의 **트랜잭션** 언어
-- 호출을 통해 실행되어 미리 저장해 놓은 SQL 작업 실행
-- DB에 저장되어 수행되어 **스토어드 프로시저(Stored Procedure)**
-- 시스템의 일일 마감작업, 일괄(Batch) 작업 등에 사용
-
-
-
-### 2. 유형
-
-- PL/SQL : 표준 SQL기반으로 Oracle에서 개발한 데이터 조작언어
-
-- JDBC  (Java DataBase Connectivity) ★ 
-
-  **Java 언어로 다양한** 종류의 DB에 접속하고 SQL문 수행할 때 **표준 API**
-
-
-
-### 3. 구성도 
-
-![image-20210703164600937](Syntax_SQL.assets/image-20210703164600937.png)
-
-### 4. 프로시저 명령어
-
-![image-20210703164623596](Syntax_SQL.assets/image-20210703164623596.png)
-
-
-
 -----------
 
 ## 절차형 SQL
 
+> **특정 사용자**가 **실행 순서**를 정해놓고 사용하는 SQL문
 
 
-### 1. 트리거 
+
+### 1. 트리거 ★
 
 #### (1) 정의 
 
@@ -492,6 +481,13 @@ ORDER BY A.DATETIME
 ![image-20210703164833609](Syntax_SQL.assets/image-20210703164833609.png)
 
 ![image-20210703164851021](Syntax_SQL.assets/image-20210703164851021.png)
+
+#### (4) 유형
+
+- 행 트리거 : 데이터 변환시 실행
+- 문장 트리거 : 트리거에 의해 한 번 실행
+
+
 
 ### 2. 사용자 정의 함수 
 
@@ -511,11 +507,13 @@ ORDER BY A.DATETIME
 
 ![image-20210703165109516](Syntax_SQL.assets/image-20210703165109516.png)
 
+
+
 ### 3. 커서
 
 #### (1) 정의
 
-- 쿼리문의 처리 결과가 저장되어 있는 메모리 공간을 카리키는 포인터
+- 쿼리문의 처리 결과가 저장되어 있는 **메모리 공간을 카리키는 포인터**
 - 내부에서 자동 생성 혹은 사용자가 직접 정의해서 사용
 - 수행 : (선언/명시적 커서) 열기 → 패치 → 닫기 
 
@@ -536,6 +534,36 @@ ORDER BY A.DATETIME
 
   - 절차형 SQL에서 SELECT 문의 결과로 반환되는 여러 튜플들 제어
   - 3단계 열기 패치 닫기 전에 **선언 필수**
+
+
+
+### 4. 프로시저
+
+#### (1) 정의
+
+- **절차형 SQL**을 활용하여 특정 기능을 수행하는 일종의 **트랜잭션** 언어
+- 호출을 통해 실행되어 미리 저장해 놓은 SQL 작업 실행
+- DB에 저장되어 수행되어 **스토어드 프로시저(Stored Procedure)**
+- 시스템의 일일 마감작업, 일괄(Batch) 작업 등에 사용
+
+####  (2) 유형 ★
+
+- **PL/SQL** : 표준 SQL기반으로 Oracle에서 개발한 데이터 조작언어
+
+- **JDBC  (Java DataBase Connectivity)** 
+
+  **Java 언어로 다양한** 종류의 DB에 접속하고 SQL문 수행할 때 **표준 API**
+
+#### (3) 구성도 
+
+![image-20210703164600937](Syntax_SQL.assets/image-20210703164600937.png)
+
+#### (4) 프로시저 명령어
+
+- CREATE
+- REPLACE
+
+![image-20210703164623596](Syntax_SQL.assets/image-20210703164623596.png)
 
 
 
