@@ -12,7 +12,7 @@
 
 - [개념](#개념)
 
-- [저장 및 출력](#저장및출력)
+- [저장 및 출력](#저장-및-출력)
 
 - [연산자](#연산자)
 
@@ -20,11 +20,15 @@
 
 - [반복문](#반복문)
 
-- [배열 및 문자열](#배열및문자열)
+- [배열 및 문자열](#배열-및-문자열)
 
 - [포인터](#포인터)
 
 - [함수](#함수)
+
+- [스택](#스택)
+
+- [C++](#c++)
 
 - [라이브러리](#라이브러리)
 
@@ -213,7 +217,7 @@ main() {
 
 ### 1. 연산자 유형
 
-#### (1) 전치 및 후치
+#### (1) 전치 및 후치 ★
 
 - 전치 : ++a --a
 
@@ -231,7 +235,11 @@ main() {
 
   변수값 증감
 
-#### (2) 연산자
+#### (2) 연산자 ★
+
+- `( )` - `/` - `<<` - `<` - `==` - `||`
+
+- **괄호 - 산술 - 비트 - 비교 - 관계 - 논리**
 
 ![image-20210627003635070](Syntax_C.assets/image-20210627003635070.png)
 
@@ -385,7 +393,7 @@ main() {
 - else if
 - else
 
-#### (2) switch문
+#### (2) switch문 ★
 
 - switch
   - 예약어 그대로 입력
@@ -456,6 +464,32 @@ main() {
 -8
 ```
 
+- [input]
+
+```c
+#include <stdio.h>
+void main( ){
+    int a = 7;
+    int s = 0;
+    switch(a/2){
+    // C언어에서는 정수/정수는 정수값이 나오게 되므로 소수점은 버림 처리 (3)
+    case 2 : s++;
+    case 3 : a += s;
+    // a = 7+0
+    // break문이 없어서 default 실행
+    default : a++;
+    // 8
+     }
+     printf("%d %d", s, a);
+}
+```
+
+- [output]
+
+```c
+0 8
+```
+
 
 
 
@@ -475,7 +509,7 @@ main() {
 - 초기, 종료, 증가값 중 하나 이상 생략 가능
 - 증가량으로 인해 증가한 값이 종료값과 거짓상태가 되면 종료하므로 종료값이 `i<=4`인 경우` i++`증가량일 때 `i=5`에서 종료
 
-### 2. while문 
+### 2. while문 ★
 
 #### (1) while문 
 
@@ -484,7 +518,7 @@ main() {
 - 종료값에 대한 조건식을 만족하지 못하면 한 번도 수행하지 않는다
 - 조건이 참일 동안 실행할 문장을 입력하되 두 문장 이상인 경우 `{}`
 
-#### (2) do while문 
+#### (2) do while문 ★
 
 > do
 >
@@ -494,7 +528,7 @@ main() {
 
 - 무조건 1번 실행 후 다음 조건 판단하여 탈출 여부 결정
 
-#### (3) break continue
+#### (3) break continue ★
 
 - switch나 반복문 실행 제어 
 - break : switch나 반복문 안에서 블록 벗어난다
@@ -558,6 +592,175 @@ main() {
 // 출력 이후 y++ 16이 되므로 출력할 때에는 25 15
 ```
 
+- [input]
+
+```c
+#include <stdio.h>
+double power(double base, int exp);
+
+int main()
+// main 우선 실행
+{
+    printf("%.2f\n", power(2,3));
+    // %.2f 소수점 2번째자리
+    // \n 개행
+    // return result 2^3
+    return 0;
+}
+
+double power(double base, int exp)
+// base, exp 매개변수
+{
+    double result = 1;
+    int n = exp;
+    // 3
+    while(n--) result *= base;
+    // while문 3회 순회하는 반복문 (3, 2, 1)
+    // 0되면 while문 종료
+    // result = 1(result)*2(base)
+    // 2^3 지수승 3회
+    return result;
+}
+```
+
+- [output]
+
+```c
+8.00
+```
+
+- [input]
+
+```c
+#include <stdio.h>
+
+int main()
+{
+	int cnt=0;  
+	// cnt 0으로 초기화
+	do{
+		cnt++;    
+        // cnt 1 증가
+	} while(cnt < 5);   
+    // cnt가 5보다 작으면 반복
+    // cnt가 5까지 변화하고 종료
+    
+	if(cnt == 1)    
+		cnt++;    
+    	// cnt 1 증가
+	else
+		cnt = cnt + 3;  
+    	// cnt에 3 더함
+    	// 5 + 3
+    
+	printf("%d", cnt); 
+    // 8
+	return 0;
+}
+```
+
+- [output]
+
+```c
+8
+```
+
+- [input]
+
+```c
+void main( ){
+    int i, j;
+    int temp;
+    int a[5] = {75, 95,85, 100, 50};
+    for(i=0; i<4; i++){
+        for(j=0; j<4-i;j++){
+            if(a[j] > a[j + 1]){
+                temp = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = temp;
+                // 버블정렬 (인접원소)
+            }
+        }
+    }
+    for(i=0; i<5; i++){
+    	printf("%d ", a[i]);
+    }
+}
+```
+
+- [output]
+
+```c
+50, 75, 85, 95, 100
+```
+
+- [input]
+
+```c
+#include <stdio.h>
+void main(){ 
+    int i=0; 
+    int sum=0; 
+    for(i=1;i<=10;i++){ 
+        if(i%3 == 0) { 
+            sum += i; 
+        } 
+    } 
+    printf(“%d”, sum);
+}
+```
+
+- [output]
+
+```c
+18
+// 10이하의 3의 배수 합
+```
+
+- [input]
+
+```c
+#include <stdio.h>
+void main(){ 
+    int num = 0; 
+    int i, j; 
+    for(i=1;i<=3;i++){ 
+        for(j=1;j<=5;j++){ 
+            num = i*j; 
+        } 
+    }
+	printf(“%d”, num);
+   // for문 밖의 범위
+   // i, j의 마지막 값의 곱
+}
+```
+
+- [output]
+
+```c
+15
+```
+
+- [input]
+
+```c
+#include <stdio.h>
+void main(){ 
+    int a=0, i;
+    for(i=3; i<100; i*=3)
+    // i는 3^4 81
+        a += i;
+ 	printf("%d", i);
+    // i는 3^5 243에서 for문이 종료
+}
+```
+
+- [output]
+
+```c
+243
+```
+
 
 
 
@@ -589,7 +792,7 @@ a[3] = 4
 
 
 
-### 2. 2차원 배열 
+### 2. 2차원 배열 ★
 
 #### (1) 정의 
 
@@ -613,7 +816,7 @@ a[0][2] = 4
 
 
 
-### 3. 문자열 변수 배열
+### 3. 문자열 변수 배열 ★
 
 #### (1) 정의 
 
@@ -670,6 +873,74 @@ main() {
 4
 ```
 
+- [input]
+
+```c
+#include <stdio.h>
+int main()
+{
+	char sTemp[16] = "Hello Soojebi";
+    // char array 형태로 문자열을 처리
+	printf("%s", sTemp);
+    // 문자열 출력을 위해 "%s" 포맷스트링
+	return 0;
+    // reutrn 0은 함수 
+}
+```
+
+- [output]
+
+```c
+Hello Soojebi
+// 출력값
+// reutrn 0은 함수 
+```
+
+- [input]
+
+```c
+#include <stdio.h>
+int main()
+{
+	char sTemp[16] = "Hello Soojebi";
+    // char array 형태로 문자열을 처리
+    printf("%s", &sTemp[6]); 
+    // 문자열 출력을 위해 "%s" 포맷스트링
+    // & 변수의 주소
+    // 7번째( array는 0부터시작) 값인 'S' 부터 문자열의 끝까지 출력
+	return 0;
+    // reutrn 0은 함수 
+}
+```
+
+- [output]
+
+```c
+Hello Soojebi
+// 출력값
+// reutrn 0은 함수 
+```
+
+- [input]
+
+```c
+#include <stdio.h>
+void main(){
+   int a[5] = {3, 4, 1, 2, 0};
+   // 5개의 길이를 가진 정수 배열 a
+   printf("%d %d", a[a[4]], a[3]+a[1]);
+   // %d %d 한 칸 공백 이후 십진수 출력
+   // a[a[4]] = a[0] = 3
+   // a[3]+a[1] = 4+2 = 6
+}
+```
+
+- [output]
+
+```c
+3 6
+```
+
 
 
 
@@ -715,13 +986,11 @@ c = *a;
 // 포인터 변수 가리키는 '값'을 c의 변수에 저장
 ```
 
-#### 
 
-### 2. 포인터와 배열
+
+### 2. 포인터와 배열 ★
 
 #### (1) 정의
-
-> 
 
 - [input]
 
@@ -798,6 +1067,62 @@ main() {
 91
 ```
 
+- [input]
+
+```c
+#include <stdio.h> 
+int main() 
+{ 
+    char sTemp[16] = "Hello Soojebi"; 
+    char *p = sTemp; 
+    printf("%c", *(p + 6)); 
+    // 문자를 출력하므로 포맷스트링 %c 
+	// *(p + 6) 'S'의 주소값
+    //  *p+6 이면 H에서 6번 뒤로간 값 N
+    // & 변수의 주소 (그 위치이후부터 계속 출력)
+    // * 포인터 (그 위치만 출력)
+    return 0; 
+}
+
+```
+
+- [output]
+
+```c
+S
+```
+
+- [input]
+
+```c
+#include <stdio.h>
+
+struct Soojebi {                   // 구조체 정의
+  char name[10];       // char array name 변수
+  int age;                // 정수타입 age 변수
+};
+
+int main() {
+  struct Soojebi s[] = {"Kim", 28, "Lee", 38, "Seo", 50, "Park", 35};     
+  // 구조체 배열 s 선언
+  struct Soojebi *p;     
+  // 구조체 포인터 변수 p 선언
+  p = &s[0];                   
+  // 구조체 배열s 주소(s[0])를 포인터 변수 p에 대입
+  p++;                   
+  // 포인터 변수 1 증가 시킴(s[1])
+  printf("%s %d", p->name, p->age);   
+  // 포인터 변수 p가 가리키는 구조체의 name(%s), age(%d) 한 칸 공백 후 출력  
+  return 0;
+}
+```
+
+- [output]
+
+```c
+Lee 38
+```
+
 
 
 
@@ -857,7 +1182,101 @@ int i, j;
 }
 ```
 
+#### (3) srand()
 
+> 난수를 발생시킬 초기값인 시드를 설정
+
+- 매초 마다 난수를 발생시키는 경우에는 보통 현재 시간값
+
+#### (4) swap ★
+
+- [input]
+
+```c
+#include <stdio.h>
+void swap(int *a, int *b);
+int main()
+{
+    int a=10;         
+    int b=20;        
+    // 정수 a, b 선언 및 초기화
+    swap(&a, &b); 
+    // swap 함수 호출
+    // 번지연산자(&)
+    printf("%d %d\n", a, b);   
+    // a, b 출력
+    return 0;
+}
+void swap(int *a, int *b)     
+// 두 정수를 교환
+{
+    int temp=0;
+    temp = *a;
+    *a = *b;
+    *b = temp;
+    // * 포인터
+}
+```
+
+- [output]
+
+```c
+20 10
+```
+
+#### (5) atoi ★
+
+- [input]
+
+```c
+#include <stdio.h>
+#include <stdlib.h>  //atoi() 함수 사용하기 위한 헤더파일
+
+int main()
+{
+    char str[8] = "2021";   
+    // 문자열 "2021"
+    int num = atoi(str);    
+    // atoi() 문자열을 숫자로 변환하는 함수
+    printf("%d", num * 2);   
+    // 2021(숫자) * 2 한 값을 출력
+    return 0;
+}
+```
+
+- [output]
+
+```c
+4042
+```
+
+#### (6) 아스키코드 ★
+
+- 아스키(ASCII)코드에서 **A는 65, a는 97**
+
+- [input]
+
+```c
+#include <stdio.h>
+
+void main(){
+	char A = 'A';  
+    // 65
+	char a = 'a';   
+    //97
+	printf("%x\n", a%A);
+    // %x 16진수
+    // 십진수 32가 16진수인 20으로 출력
+}
+```
+
+- [output]
+
+```c
+20
+```
+
+#### 
 
 ### 2. 재귀 함수 
 
@@ -949,6 +1368,288 @@ main() {
 
 ```c
 5 4 3 2 1
+```
+
+
+
+---
+
+## 스택
+
+### 1. 메소드 ★
+
+#### (1) init()
+
+- 스택을 초기화 함수
+
+#### (2) push()
+
+- 스택에 삽입하는 함수
+
+#### (3) pop()
+
+- 스택에서 꺼내는 함수
+
+#### (4) print_stack()
+
+- 스택을 출력하는 함수
+
+
+
+### 2. 문제
+
+#### (1) stack
+
+- [input]
+
+```c
+#include <stdio.h>
+#define MAX_SIZE 10   
+// 스택 최대 사이즈 지정
+int stack[MAX_SIZE];    
+// 스택(배열) 
+int top;                     
+// 스택 top 
+
+void init()
+// 스택 초기화  
+{
+	top = -1;
+}
+
+int push(int val)
+// 스택 push 함수 (데이터 삽입)
+{
+	if(top>=MAX_SIZE-1){
+		printf("stack overflow\n");
+		return -1;
+	}
+	stack[++top] = val;      
+    // top을 1 증가 시키고 val을 스택에 넣음
+	return val;
+}
+
+int pop(void)
+// 스택 pop 함수 (데이터를 꺼냄)
+{
+	if(top<0){
+		printf("stack underflow\n");
+		return -1;
+	}
+	return stack[top--];    
+    // top을 넣고 val 1 감소
+}
+
+
+void print_stack(){      
+// 스택 내용 출력 함수
+	int i;
+	printf("in stack.. ");
+	for(i=top;i>=0;i--){
+		printf("%d ", stack[i]);	
+	}
+	printf("\n");
+}
+
+int main()
+{
+	int i;
+	int item;
+	
+	init();
+	
+	for(i=1;i<=10;i++){  
+    //스택에 1부터 10까지 삽입
+		push(i);
+	}
+	print_stack();
+    // 삽입 확인
+	
+	item = pop();
+    //스택에서 하나 꺼냄
+	printf("pop item is %d\n", item);    
+    //꺼낸 데이터를 화면에 출력
+	print_stack();
+    //스택 확인
+	
+	return 0;
+}
+```
+
+#### (2) Linked List
+
+- [input]
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node {
+	int data;                  
+    // 저장 데이터
+	struct node *next;     
+    // 노드의 다음 주소를 저장할 포인터 변수
+}Node; 
+
+void push(Node *head, int data){
+	Node *end = (Node *)malloc(sizeof(Node));   
+    // malloc함수를 이용하여 메모리 할당하여 노드를 하나 생성함
+	end->____(1)_____ = head->next;       
+    // head의 next 값을 end의 end의 next에 대입함
+	end->data = data;      
+    // 매개변수로 전달받은 data를 end의 data에 대입함
+	head->next = end;     
+    //end의 주소값을 head의 next에 대입함
+}
+
+int pop(Node *head){
+	int a;
+	Node *del = head->next;     
+    // 노드를 삭제하기 전 head의 next를 del에 대입함
+	head->next = del->next;      
+    // del의 next를 head의 next에 대입함
+	a = del->data;                   
+    // del의 data를 a에 대입함
+	free( ____(2)_____ );              
+    // free함수를 이용하여 del을 메모리에서 해제하여 노드를 제거함
+	return a;
+}
+
+void print(Node *head){
+	Node *tmp = head->next;       
+    // head의 next 를 tmp에 대입함
+	while(tmp != NULL){              
+    // tmp가 NULL이 아니면 반복을 수행함
+		printf("%d ", tmp->data);    
+        // tmp의 data를 화면에 출력함
+		____(3)_____ = tmp->next;   
+        // tmp의 next를 tmp에 대입함
+	}
+}
+
+int main(int argc, char *argv[]){
+	int r=10;
+	int i=0;
+	
+	Node *head = (Node *)malloc(sizeof(Node));    
+    // head 를 malloc 하여 생성함
+	head->data = 0;              
+    // head의 data에 0을 대입함  
+	head->next = NULL;        
+    // head의 next에 NULL을 대입함
+	
+	for(i=0;i<10;i++){         
+    // i값은 0부터 10보다 작을때까지 1씩 증가하며 반복함
+		push(head, i);         
+        // i값을 스택에 push 함
+	}
+	printf("push data : ");  
+	print(head);     
+    // 스택의 내용을 보여줌
+	printf("\n");
+	
+	r = pop(head);    
+    // 스택에서 데이터를 pop 하여 r에 대입함
+	printf("pop data : %d\n", r);      
+    // pop 한 데이터인 r을 화면에 출력함
+	printf("stack data : ");
+	print(head);     
+    // 스택의 내용을 보여줌
+	
+	return 0;
+```
+
+
+
+---
+
+## C++
+
+### 1. 문제
+
+- [input]
+
+```c
+#include <iostream>
+using namespace std;
+void main( ){
+     int a[5] = {1, 2, 3};
+     // 정수형 길이 5 배열 a
+     // {1, 2, 3, 0, 0}
+     int s = 0;
+     for(int i=2; i<4; i++){
+        s += a[i];
+        // a[2] + a[3] = 3 + 0 = 3
+     }
+    cout << s;
+    // c++ 출력문 cout
+    // c++ 입력문 cin
+}
+```
+
+- [output]
+
+```c
+3
+```
+
+- [input]
+
+```c
+#include <iostream>
+void main( ) {
+    int i;
+    int s = 0;
+    int a[5] = {4, 2, 1, 7, 10};
+    for(i=0; i<4; i++) {
+        s += a[i];
+    }
+    std::cout << s << std::endl;
+}
+```
+
+- [output]
+
+```c
+14
+// a[0]에서 a[3]까지의 합
+```
+
+- [input]
+
+```c
+#include <iostream>
+class A{
+    public: A( ){ 
+        std::cout << "A "; 
+    } 
+    ~A( ){ 
+        std::cout << "~A "; 
+    }
+};
+class B : public A{
+public: 
+    B( ){ 
+        std::cout << "B "; 
+    } 
+    ~B( ){ 
+        std::cout << "~B "; 
+    }
+};
+void main( ){ 
+    A* a = new B( ); 
+    delete a; 
+    std::cout << std::endl; 
+    B* b = new B( ); 
+    delete b;
+}
+```
+
+- [output]
+
+```c
+A B ~A
+A B ~B ~A
 ```
 
 
