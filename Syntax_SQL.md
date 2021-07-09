@@ -12,14 +12,35 @@
 
 - [개념](#개념)
 - [DDL](#DDL)
+  - CREATE
+    - TABLE
+    - VIEW AS SELECT
+  - ALTER
+    - ADD
+    - ALTER (MODIFY)
+    - DROP COLUMN
+  - DROP
+    - TABLE
 - [DCL](#DCL)
+  - GRANT ON TO
+  - REVOKE ON FROM
+  - COMMIT
+  - ROLLBACK
+  - SAVEPOINT
 - [DML](#DML)
+  - SELECT FROM
+  - INSERT INTO VALUES
+  - DELETE FROM
+  - UPDATE SET
 - [JOIN](#JOIN)
 - [절차형 SQL](#절차형-sql)
   - 트리거
   - 사용자 정의 함수
   - 커서
   - 프로시저
+- [옵티마이저](#옵티마이저)
+  - RBO
+  - CBO
 
 
 
@@ -778,6 +799,28 @@ ORDER BY A.DATETIME
 - REPLACE
 
 ![image-20210703164623596](Syntax_SQL.assets/image-20210703164623596.png)
+
+---
+
+## 옵타마이저
+
+
+
+### 1. 정의
+
+> SQL을 가장 빠르고 효율적으로 수행할 수 있는 **최적의 경로**
+
+
+
+### 2. 유형
+
+#### (1) **RBO (Rule)**
+
+- 규칙 기반 옵티마이저 
+
+#### (2) **CBO (Cost)** 
+
+- 비용 기반 옵티마이저
 
 
 
